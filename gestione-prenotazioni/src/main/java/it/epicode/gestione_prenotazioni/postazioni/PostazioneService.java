@@ -1,18 +1,26 @@
 package it.epicode.gestione_prenotazioni.postazioni;
 
+
+import it.epicode.gestione_prenotazioni.prenotazioni.PrenotazioneRepository;
+import it.epicode.gestione_prenotazioni.utenti.UtenteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class PostazioneService {
-    private final PostazioneRepository postazioneRepository;
+    @Autowired
+    private PostazioneRepository postazioneRepository;
+    @Autowired
+    private UtenteRepository utenteRepository;
+    @Autowired
+    private PrenotazioneRepository prenotazioneRepository;
 
-    public PostazioneService(PostazioneRepository postazioneRepository) {
-        this.postazioneRepository = postazioneRepository;
+    public void inserisciPostazione(Postazione postazione) {
+        postazioneRepository.save(postazione);
     }
 
-    public List<Postazione> findByTipoPostazioneAndCitta(TipoPostazione tipoPostazione, String citta) {
-        return postazioneRepository.findByTipoPostazioneAndEdificio_Citta(tipoPostazione, citta);
+    public Postazione getPostazioneById(Integer id) {
+        return postazioneRepository.findById(id).orElseThrow();
     }
 }

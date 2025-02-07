@@ -2,32 +2,30 @@ package it.epicode.gestione_prenotazioni.postazioni;
 
 import it.epicode.gestione_prenotazioni.edifici.Edificio;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Table(name = "postazioni")
-
 public class Postazione {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
-
-    @Column(unique = true, nullable = false)
-    private String codice;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String descrizione;
-
     @Enumerated(EnumType.STRING)
     private TipoPostazione tipoPostazione;
-
-    private int numeroMaxOccupanti;
-
+    private Integer maxOccupanti;
     @ManyToOne
-    @JoinColumn(name = "edificio_id", nullable = false)
+    @JoinColumn(name = "edificio_id")
     private Edificio edificio;
+
+    @Override
+    public String toString() {
+        return "Postazione{" +
+                "id=" + id +
+                ", descrizione='" + descrizione + '\'' +
+                ", tipoPostazione=" + tipoPostazione +
+                ", maxOccupanti=" + maxOccupanti +
+                '}';
+    }
 }
